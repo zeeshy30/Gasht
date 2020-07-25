@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Form from '../components/form';
 import LoadingScreen from '../components/loader';
@@ -43,10 +43,6 @@ export default class Home extends Component {
                             <Text style={styles.logout}>Logout</Text>
                         </TouchableOpacity>
                     </View>
-
-                    <TouchableOpacity style={styles.searchBoxWrapper}>
-                        <Text style={styles.searchBox}>Search</Text>
-                    </TouchableOpacity>
                     <TouchableOpacity style={styles.addAddressWrapper}>
                         <Entypo name="plus" size={20} color="white" />
                         <Text style={styles.addAddress}>Add Address</Text>
@@ -100,6 +96,9 @@ export default class Home extends Component {
                             value={this.state.filterAddress}
                         />
                     </View>
+                    <View style={styles.searchBox}>
+                        <Button color="green" title="Search" />
+                    </View>
                 </View>
             </View>
         );
@@ -138,13 +137,12 @@ const styles = StyleSheet.create({
         textDecorationLine: 'underline',
         color: 'white',
     },
-    searchBoxWrapper: {
-        height: '100%',
-        justifyContent: 'center',
-    },
     searchBox: {
-        color: 'white',
-        fontSize: 20,
+        backgroundColor: 'green',
+        width: 100,
+        alignSelf: 'center',
+        marginBottom: 10,
+        borderRadius: 15,
     },
     addAddressWrapper: {
         flexDirection: 'row',

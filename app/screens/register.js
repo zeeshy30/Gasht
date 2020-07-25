@@ -72,7 +72,7 @@ export default class Register extends Component {
                         .set({
                             email,
                             fullName,
-                            localAdminEmail: localAdmin,
+                            adminEmail: localAdmin,
                         });
                     if (firebase.auth().currentUser) {
                         console.log('userlogggrerin');
