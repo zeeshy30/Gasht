@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Alert, Text } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
+import { connect } from 'react-redux';
 
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
 import '@react-native-firebase/firestore';
 
 import Logo from '../components/logo';
+import { LoginSuccess, LoginFailed } from '../actions/auth';
 
-export default class InitialScreen extends Component {
+class InitialScreen extends Component {
     componentDidMount() {
         this.fetchData();
     }
@@ -22,11 +24,13 @@ export default class InitialScreen extends Component {
                     .doc(user.uid)
                     .get();
                 const details = doc.data();
-                details.docID = doc.id;
-                // await AsyncStorage.setItem('loginDetails', JSON.stringify(details));
+                this.props.dispatch(LoginSuccess(details));
                 this.props.navigation.navigate('home');
             } catch (err) {
-                Alert.alert(err);
+                console.log(err);
+                firebase.auth().signOut();
+                this.props.dispatch(LoginFailed(err));
+                this.props.navigation.navigate('login');
             }
         } else {
             this.props.navigation.navigate('login');
@@ -47,6 +51,8 @@ export default class InitialScreen extends Component {
         );
     }
 }
+
+export default connect()(InitialScreen);
 
 const styles = StyleSheet.create({
     container: {

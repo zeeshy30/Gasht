@@ -3,11 +3,12 @@ import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Form from '../components/form';
 import LoadingScreen from '../components/loader';
+import { connect } from 'react-redux';
 
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
 
-export default class Home extends Component {
+class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,6 +19,7 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
+        console.log(this.props);
         const user = firebase.auth().currentUser;
         if (!user) {
             this.props.navigation.navigate('login');
@@ -104,6 +106,12 @@ export default class Home extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return { user: state.auth.user };
+};
+
+export default connect(mapStateToProps)(Home);
 
 const styles = StyleSheet.create({
     container: {

@@ -75,22 +75,17 @@ export default class Register extends Component {
                             adminEmail: localAdmin,
                         });
                     if (firebase.auth().currentUser) {
-                        console.log('userlogggrerin');
                         await firebase.auth().signOut();
-                    } else {
-                        console.log('no user logged in');
                     }
                     this.props.navigation.navigate('login');
                 } catch (err) {
                     this.setState({ processing: false });
                     console.log(err);
-                    // Alert.alert(err);
                 }
             })
-            .catch((error) => {
+            .catch((err) => {
                 this.setState({ processing: false });
-                // Alert.alert(error);
-                console.log(error);
+                console.log(err);
             });
     };
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
+import { connect } from 'react-redux';
 
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
@@ -8,8 +9,9 @@ import LoadingScreen from '../components/loader';
 import Form from '../components/form';
 import Button from '../components/button';
 import Logo from '../components/logo';
+import { Login as loginUser } from '../actions/auth';
 
-export default class Login extends Component {
+class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,6 +23,12 @@ export default class Login extends Component {
     componentDidMount() {
         const user = firebase.auth().currentUser;
         if (user) {
+            this.props.navigation.navigate('home');
+        }
+    }
+
+    componentDidUpdate() {
+        if (this.props.auth.authSuccess) {
             this.props.navigation.navigate('home');
         }
     }
@@ -46,33 +54,19 @@ export default class Login extends Component {
             Alert.alert('Enter details to Login!');
             return;
         }
-        try {
-            const res = await firebase
-                .auth()
-                .signInWithEmailAndPassword(
-                    this.state.email,
-                    this.state.password,
-                );
-            const doc = await firebase
-                .firestore()
-                .collection('Users')
-                .doc(res.user.uid)
-                .get();
-            const details = doc.data();
-            details.docID = doc.id;
 
-            // await AsyncStorage.setItem('loginDetails', JSON.stringify(details));
-            this.props.navigation.navigate('home');
-        } catch (err) {
-            this.setState({ processing: false });
-            // Alert.alert(err);
-            console.log(err);
-        }
+        this.props.dispatch(
+            loginUser({
+                email: this.state.email,
+                password: this.state.password,
+                dispatch: this.props.dispatch,
+            }),
+        );
     };
     render() {
         return (
             <>
-                {this.state.processing ? (
+                {this.props.auth.loading ? (
                     <LoadingScreen />
                 ) : (
                     <View style={styles.container}>
@@ -96,12 +90,7 @@ export default class Login extends Component {
                                 value={this.state.password}
                             />
                         </View>
-                        <Button
-                            onPress={() =>
-                                this.setState({ processing: true }, this.Login)
-                            }
-                            text="Login"
-                        />
+                        <Button onPress={this.Login} text="Login" />
                         <View style={styles.signupTextCont}>
                             <Text style={styles.signupText}>
                                 Dont have an account yet?{' '}
@@ -121,6 +110,12 @@ export default class Login extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return { auth: state.auth };
+};
+
+export default connect(mapStateToProps)(Login);
 
 const styles = StyleSheet.create({
     formContainer: {
