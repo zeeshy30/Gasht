@@ -16,6 +16,8 @@ import Login from './app/screens/login';
 import Register from './app/screens/register';
 import ForgotPassword from './app/screens/forgotPassword';
 import Home from './app/screens/home';
+import AddAddress from './app/screens/addAddress';
+import Records from './app/screens/records';
 
 const Stack = createStackNavigator();
 
@@ -61,6 +63,20 @@ const App = () => {
                     name="home"
                     component={Home}
                     options={Home.navigationOptions}
+                />
+                <Stack.Screen
+                    name="addAddress"
+                    component={AddAddress}
+                    options={({ route }) => ({
+                        title: route.params.title,
+                    })}
+                />
+                <Stack.Screen
+                    name="records"
+                    component={Records}
+                    options={{
+                        title: 'Gasht Records',
+                    }}
                 />
             </Stack.Navigator>
         </NavigationContainer>

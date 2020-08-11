@@ -119,6 +119,7 @@ export default connect(mapStateToProps)(Login);
 
 const styles = StyleSheet.create({
     formContainer: {
+        width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
     },

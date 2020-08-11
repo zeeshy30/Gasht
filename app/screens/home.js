@@ -4,6 +4,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Form from '../components/form';
 import LoadingScreen from '../components/loader';
 import { connect } from 'react-redux';
+import { LoadRecords } from '../actions/records';
 
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
@@ -13,18 +14,24 @@ class Home extends Component {
         super(props);
         this.state = {
             processing: false,
+            records: [],
             filterName: '',
             filterAddress: '',
         };
     }
 
     componentDidMount() {
-        console.log(this.props);
         const user = firebase.auth().currentUser;
         if (!user) {
             this.props.navigation.navigate('login');
+        } else {
+            this.getRecords();
         }
     }
+
+    getRecords = () => {
+        this.props.dispatch(LoadRecords(this.props.dispatch));
+    };
 
     static navigationOptions = (props) => {
         const logout = async () => {
@@ -45,7 +52,13 @@ class Home extends Component {
                             <Text style={styles.logout}>Logout</Text>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.addAddressWrapper}>
+                    <TouchableOpacity
+                        style={styles.addAddressWrapper}
+                        onPress={() =>
+                            props.navigation.navigate('addAddress', {
+                                title: 'Add Record',
+                            })
+                        }>
                         <Entypo name="plus" size={20} color="white" />
                         <Text style={styles.addAddress}>Add Address</Text>
                     </TouchableOpacity>
@@ -65,17 +78,29 @@ class Home extends Component {
         }
     };
 
+    search = () => {
+        this.props.navigation.navigate('records', {
+            filterName: this.state.filterName,
+            filterAddress: this.state.filterAddress,
+        });
+    };
+
     render() {
-        return this.state.processing ? (
+        return this.props.records.loading || !this.props.records.loaded ? (
             <LoadingScreen />
         ) : (
             <View style={styles.container}>
-                <View>
-                    <Text style={styles.masjidName}>Masjid Name</Text>
+                <View style={styles.masjidDetails}>
+                    <Text style={styles.masjidName}>
+                        {this.props.user.masjid}
+                    </Text>
                     <Text style={styles.address}>Address of the Masjid</Text>
                 </View>
                 <Text style={styles.recordNum}>Gasht Records</Text>
-                <Text style={styles.recordNum}>Total Records = 195</Text>
+                <Text style={styles.recordNum}>
+                    Total Records ={' '}
+                    {Object.keys(this.props.records.data).length}
+                </Text>
                 <View>
                     <Text style={styles.filter}>Filter</Text>
                     <View style={styles.form}>
@@ -99,7 +124,11 @@ class Home extends Component {
                         />
                     </View>
                     <View style={styles.searchBox}>
-                        <Button color="green" title="Search" />
+                        <Button
+                            color="green"
+                            title="Search"
+                            onPress={this.search}
+                        />
                     </View>
                 </View>
             </View>
@@ -108,7 +137,7 @@ class Home extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return { user: state.auth.user };
+    return { user: state.auth.user, records: state.records };
 };
 
 export default connect(mapStateToProps)(Home);
@@ -119,7 +148,8 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         paddingLeft: 15,
-        justifyContent: 'space-between',
+        // marginBottom: 50,
+        // justifyContent: 'space-between',
     },
     header: {
         justifyContent: 'space-between',
@@ -163,16 +193,22 @@ const styles = StyleSheet.create({
     masjidName: {
         fontSize: 35,
         marginTop: 20,
+        // marginBottom: 50,
     },
     address: {
         fontSize: 16,
     },
+    masjidDetails: {
+        marginBottom: 50,
+    },
     recordNum: {
         fontSize: 25,
+        marginBottom: 20,
     },
     filter: {
         fontSize: 35,
         marginBottom: 15,
+        marginTop: 50,
     },
     form: {
         flexDirection: 'row',

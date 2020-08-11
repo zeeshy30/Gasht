@@ -31,7 +31,7 @@ export default class Register extends Component {
         this.setState({ password: val });
     };
 
-    SignUp = () => {
+    SignUp = async () => {
         const {
             fullName,
             email,
@@ -54,39 +54,47 @@ export default class Register extends Component {
             // Alert.alert('Please fill all the fields.');
             return;
         }
-
         this.setState({ processing: true });
+        try {
+            const adminSnapshot = await firebase
+                .firestore()
+                .collection('Users')
+                .where('email', '==', localAdmin)
+                .get();
 
-        firebase
-            .auth()
-            .createUserWithEmailAndPassword(email, password)
-            .then(async (res) => {
-                res.user.updateProfile({
-                    displayName: fullName,
-                });
-                try {
-                    await firebase
-                        .firestore()
-                        .collection('Users')
-                        .doc(res.user.uid)
-                        .set({
-                            email,
-                            fullName,
-                            adminEmail: localAdmin,
-                        });
-                    if (firebase.auth().currentUser) {
-                        await firebase.auth().signOut();
-                    }
-                    this.props.navigation.navigate('login');
-                } catch (err) {
-                    this.setState({ processing: false });
-                    console.log(err);
-                }
-            })
-            .catch((err) => {
-                this.setState({ processing: false });
-                console.log(err);
+            const admins = [];
+            adminSnapshot.forEach((admin) => {
+                admins.push(admin.data());
             });
+
+            if (!admins.length) {
+                this.setState({ processing: false });
+                console.log('invalid admin email');
+                return;
+            }
+
+            const res = await firebase
+                .auth()
+                .createUserWithEmailAndPassword(email, password);
+
+            await firebase
+                .firestore()
+                .collection('Users')
+                .doc(res.user.uid)
+                .set({
+                    email,
+                    fullName,
+                    adminEmail: localAdmin,
+                    masjid: admins[0].masjid,
+                });
+            if (firebase.auth().currentUser) {
+                await firebase.auth().signOut();
+            }
+            this.props.navigation.navigate('login');
+        } catch (err) {
+            this.setState({ processing: false });
+            console.log(err);
+        }
     };
 
     render() {
@@ -167,6 +175,7 @@ export default class Register extends Component {
 
 const styles = StyleSheet.create({
     formContainer: {
+        width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
     },
