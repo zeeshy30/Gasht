@@ -11,6 +11,9 @@ export const ActionTypes = {
     ADD_RECORD: 'ADD_RECORD',
     ADD_RECORD_FAILED: 'ADD_RECORD_FAILED',
     ADD_RECORD_SUCCESS: 'ADD_RECORD_SUCCESS',
+    DELETE_RECORD: 'DELETE_RECORD',
+    DELETE_RECORD_FAILED: 'DELETE_RECORD_FAILED',
+    DELETE_RECORD_SUCCESS: 'DELETE_RECORD_SUCCESS',
 };
 
 const LoadRecordsFun = async (dispatch) => {
@@ -110,6 +113,36 @@ const AddRecordSuccess = (data) => {
 const AddRecordFailed = (errors) => {
     return {
         type: ActionTypes.ADD_RECORD_FAILED,
+        payload: errors,
+    };
+};
+
+const DeleteRecordFun = async (id, dispatch) => {
+    try {
+        await firebase.firestore().collection('Records').doc(id).delete();
+        dispatch(DeleteRecordSuccess({ delId: id }));
+    } catch (err) {
+        dispatch(DeleteRecordFailed(err));
+    }
+};
+
+export const DeleteRecord = (id, dispatch) => {
+    DeleteRecordFun(id, dispatch);
+    return {
+        type: ActionTypes.DELETE_RECORD,
+    };
+};
+
+const DeleteRecordSuccess = (data) => {
+    return {
+        type: ActionTypes.DELETE_RECORD_SUCCESS,
+        payload: data,
+    };
+};
+
+const DeleteRecordFailed = (errors) => {
+    return {
+        type: ActionTypes.DELETE_RECORD_FAILED,
         payload: errors,
     };
 };

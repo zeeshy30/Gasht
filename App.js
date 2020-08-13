@@ -18,6 +18,8 @@ import ForgotPassword from './app/screens/forgotPassword';
 import Home from './app/screens/home';
 import AddAddress from './app/screens/addAddress';
 import Records from './app/screens/records';
+import LocalAdminPanel from './app/screens/localAdminPanel';
+import DeletedRecords from './app/screens/deletedRecords';
 
 const Stack = createStackNavigator();
 
@@ -76,6 +78,20 @@ const App = () => {
                     component={Records}
                     options={{
                         title: 'Gasht Records',
+                    }}
+                />
+                <Stack.Screen
+                    name="localAdminPanel"
+                    component={LocalAdminPanel}
+                    options={{
+                        title: 'Local Admin Panel',
+                    }}
+                />
+                <Stack.Screen
+                    name="deletedRecords"
+                    component={DeletedRecords}
+                    options={{
+                        title: 'Recycle Deleted Addresses',
                     }}
                 />
             </Stack.Navigator>

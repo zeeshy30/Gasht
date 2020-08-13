@@ -124,7 +124,7 @@ class AddAddress extends Component {
             <View style={styles.container}>
                 <Spinner
                     visible={this.props.records.updating}
-                    textContent={'Saving...'}
+                    textContent={'Updating...'}
                     textStyle={styles.spinnerTextStyle}
                 />
                 <View style={styles.googlePlaces}>

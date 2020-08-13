@@ -69,6 +69,25 @@ const RecordReducer = (state = initialState, action) => {
                 updating: false,
                 errors: action.payload,
             };
+        case ActionTypes.DELETE_RECORD:
+            return {
+                ...state,
+                updating: true,
+            };
+        case ActionTypes.DELETE_RECORD_SUCCESS:
+            const { delId } = action.payload;
+            const { [delId]: value, ...updatedData } = state.data;
+            return {
+                ...state,
+                updating: false,
+                data: updatedData,
+            };
+        case ActionTypes.DELETE_RECORD_FAILED:
+            return {
+                ...state,
+                updating: false,
+                errors: action.payload,
+            };
         default:
             return state;
     }

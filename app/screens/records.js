@@ -96,25 +96,32 @@ class Records extends Component {
         const locationFiltered = this.filterByLocation(
             this.props.route.params.filterAddress,
         );
-        const displayRecords = this.state.findNearby
+        let displayRecords = this.state.findNearby
             ? this.findNearby(this.state.id)
             : nameFiltered.filter((value) => locationFiltered.includes(value));
+
+        displayRecords = displayRecords.filter(
+            (record) => !this.props.records.data[record].deleted,
+        );
 
         return (
             <ScrollView style={styles.container}>
                 {this.props.records.loaded &&
-                    displayRecords.map((record) => (
-                        <RecordTile
-                            key={record}
-                            dispatch={this.props.dispatch}
-                            {...this.props.records.data[record]}
-                            id={record}
-                            navigation={this.props.navigation}
-                            findNearby={(id) =>
-                                this.setState({ findNearby: true, id })
-                            }
-                        />
-                    ))}
+                    displayRecords.map((record) => {
+                        return (
+                            <RecordTile
+                                key={record}
+                                dispatch={this.props.dispatch}
+                                {...this.props.records.data[record]}
+                                updating={this.props.records.updating}
+                                id={record}
+                                navigation={this.props.navigation}
+                                findNearby={(id) =>
+                                    this.setState({ findNearby: true, id })
+                                }
+                            />
+                        );
+                    })}
             </ScrollView>
         );
     }

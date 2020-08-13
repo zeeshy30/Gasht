@@ -99,7 +99,12 @@ class Home extends Component {
                 <Text style={styles.recordNum}>Gasht Records</Text>
                 <Text style={styles.recordNum}>
                     Total Records ={' '}
-                    {Object.keys(this.props.records.data).length}
+                    {
+                        Object.keys(this.props.records.data).filter(
+                            (record) =>
+                                !this.props.records.data[record].deleted,
+                        ).length
+                    }
                 </Text>
                 <View>
                     <Text style={styles.filter}>Filter</Text>
@@ -130,6 +135,19 @@ class Home extends Component {
                             onPress={this.search}
                         />
                     </View>
+                    {this.props.user.isLocalAdmin && (
+                        <View style={styles.adminButton}>
+                            <Button
+                                color="green"
+                                title="Open Admin Panel"
+                                onPress={() =>
+                                    this.props.navigation.navigate(
+                                        'localAdminPanel',
+                                    )
+                                }
+                            />
+                        </View>
+                    )}
                 </View>
             </View>
         );
@@ -147,9 +165,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         width: '100%',
         height: '100%',
-        paddingLeft: 15,
-        // marginBottom: 50,
-        // justifyContent: 'space-between',
+        paddingHorizontal: 15,
     },
     header: {
         justifyContent: 'space-between',
@@ -216,6 +232,6 @@ const styles = StyleSheet.create({
     label: {
         fontSize: 18,
         alignSelf: 'center',
-        marginRight: 20,
+        // marginRight: 20,
     },
 });
