@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Alert } from 'react-native';
 import { connect } from 'react-redux';
 
 import firebase from '@react-native-firebase/app';
@@ -27,7 +27,7 @@ class InitialScreen extends Component {
                 this.props.dispatch(LoginSuccess(details));
                 this.props.navigation.navigate('home');
             } catch (err) {
-                console.log(err);
+                Alert.alert(err);
                 firebase.auth().signOut();
                 this.props.dispatch(LoginFailed(err));
                 this.props.navigation.navigate('login');

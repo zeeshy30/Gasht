@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native';
+import {
+    ScrollView,
+    View,
+    Text,
+    StyleSheet,
+    TouchableOpacity,
+    Button,
+    Alert,
+} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Form from '../components/form';
 import LoadingScreen from '../components/loader';
@@ -39,7 +47,7 @@ class Home extends Component {
                 await firebase.auth().signOut();
                 props.navigation.navigate('login');
             } catch (err) {
-                console.log(err);
+                Alert.alert(err);
             }
         };
 
@@ -74,7 +82,7 @@ class Home extends Component {
             this.props.navigation.navigate('login');
         } catch (err) {
             this.setState({ processing: false });
-            console.log(err);
+            Alert.alert(err);
         }
     };
 
@@ -89,7 +97,7 @@ class Home extends Component {
         return this.props.records.loading || !this.props.records.loaded ? (
             <LoadingScreen />
         ) : (
-            <View style={styles.container}>
+            <ScrollView style={styles.container}>
                 <View style={styles.masjidDetails}>
                     <Text style={styles.masjidName}>
                         {this.props.user.masjid}
@@ -149,7 +157,7 @@ class Home extends Component {
                         </View>
                     )}
                 </View>
-            </View>
+            </ScrollView>
         );
     }
 }

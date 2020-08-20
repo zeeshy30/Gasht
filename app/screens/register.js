@@ -41,7 +41,7 @@ export default class Register extends Component {
         } = this.state;
 
         if (password !== confirmPassword) {
-            // Alert.alert("Passwords don't match.");
+            Alert.alert("Passwords don't match.");
             return;
         }
         if (
@@ -51,7 +51,7 @@ export default class Register extends Component {
             password === '' ||
             confirmPassword === ''
         ) {
-            // Alert.alert('Please fill all the fields.');
+            Alert.alert('Please fill all the fields.');
             return;
         }
         this.setState({ processing: true });
@@ -59,7 +59,7 @@ export default class Register extends Component {
             const adminSnapshot = await firebase
                 .firestore()
                 .collection('Users')
-                .where('email', '==', localAdmin)
+                .where('email', '==', localAdmin.toLowerCase())
                 .get();
 
             const admins = [];
@@ -67,9 +67,12 @@ export default class Register extends Component {
                 admins.push(admin.data());
             });
 
-            if (!admins.length) {
+            if (
+                !admins.length ||
+                (!admins[0].isLocalAdmin && !admins[0].isAdmin)
+            ) {
                 this.setState({ processing: false });
-                console.log('invalid admin email');
+                Alert.alert('Invalid admin email');
                 return;
             }
 
@@ -82,9 +85,9 @@ export default class Register extends Component {
                 .collection('Users')
                 .doc(res.user.uid)
                 .set({
-                    email,
+                    email: email.toLowerCase(),
                     fullName,
-                    adminEmail: localAdmin,
+                    adminEmail: localAdmin.toLowerCase(),
                     masjid: admins[0].masjid,
                 });
             if (firebase.auth().currentUser) {
@@ -93,7 +96,7 @@ export default class Register extends Component {
             this.props.navigation.navigate('login');
         } catch (err) {
             this.setState({ processing: false });
-            console.log(err);
+            Alert.alert(err);
         }
     };
 

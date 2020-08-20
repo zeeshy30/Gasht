@@ -1,3 +1,4 @@
+import { Alert } from 'react-native';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
 
@@ -23,12 +24,12 @@ const LoginUser = async (email, password, dispatch) => {
             firebase.auth().signOut();
         }
         dispatch(LoginFailed(err));
-        console.log(err);
+        Alert.alert(err);
     }
 };
 
-export const Login = ({ email, password, dispatch }) => {
-    LoginUser(email, password, dispatch);
+export const Login = ({ email, password, dispatch, navigation }) => {
+    LoginUser(email, password, dispatch, navigation);
     return {
         type: ActionTypes.LOGIN,
     };

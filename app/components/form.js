@@ -20,7 +20,7 @@ const Form = React.forwardRef((props, ref) => {
                 placeholderTextColor={'#bcbcbc'}
                 secureTextEntry={props.secureTextEntry}
                 selectionColor="#aaa"
-                keyboardType={props.keyboardType || 'default'}
+                // keyboardType={props.keyboardType || 'default'}
                 onSubmitEditing={props.onSubmitEditing}
                 value={props.value}
                 ref={ref}

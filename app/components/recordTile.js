@@ -5,10 +5,9 @@ import {
     View,
     Text,
     TouchableOpacity,
+    Alert,
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
-import firebase from '@react-native-firebase/app';
-import '@react-native-firebase/firestore';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 import { UpdateRecord } from '../actions/records';
@@ -46,7 +45,7 @@ const RecordTile = (props) => {
             );
             setLastVisitedDate(now);
         } catch (err) {
-            console.error(err);
+            Alert.alert(err);
         }
     };
 

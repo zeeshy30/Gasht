@@ -20,6 +20,7 @@ class Login extends Component {
             password: '',
         };
     }
+
     componentDidMount() {
         const user = firebase.auth().currentUser;
         if (user) {

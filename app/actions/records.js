@@ -1,5 +1,6 @@
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/firestore';
+import { Alert } from 'react-native';
 
 export const ActionTypes = {
     LOAD_RECORDS: 'LOAD_RECORDS',
@@ -31,7 +32,7 @@ const LoadRecordsFun = async (dispatch) => {
         dispatch(LoadRecordsSuccess(records));
     } catch (err) {
         dispatch(LoadRecordsFailed(err));
-        console.error(err);
+        Alert.alert(err);
     }
 };
 

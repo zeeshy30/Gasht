@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { StyleSheet, View, ScrollView, Alert } from 'react-native';
 import { connect } from 'react-redux';
 
 import Form from '../components/form';
@@ -67,11 +67,14 @@ class AddAddress extends Component {
             rest.country === '' ||
             rest.phoneNumber === '' ||
             rest.zonePocket === '' ||
-            rest.latitude === null ||
-            rest.longitude === null ||
             rest.notes === ''
         ) {
-            console.error('Error: fill all fields');
+            Alert.alert('Error: Please fill all the fields');
+            return;
+        }
+
+        if (rest.latitude === null || rest.longitude === null) {
+            Alert.alert('Please enter address in "Search Location" Field');
             return;
         }
 
