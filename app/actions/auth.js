@@ -6,6 +6,7 @@ export const ActionTypes = {
     LOGIN: 'LOGIN',
     LOGIN_FAILED: 'LOGIN_FAILED',
     LOGIN_SUCCESS: 'LOGIN_SUCCESS',
+    LOGOUT: 'LOGOUT',
 };
 
 const LoginUser = async (email, password, dispatch) => {
@@ -46,5 +47,12 @@ export const LoginSuccess = (data) => {
     return {
         type: ActionTypes.LOGIN_SUCCESS,
         payload: data,
+    };
+};
+
+export const Logout = () => {
+    firebase.auth().signOut();
+    return {
+        type: ActionTypes.LOGOUT,
     };
 };

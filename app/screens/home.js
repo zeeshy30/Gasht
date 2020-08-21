@@ -13,9 +13,24 @@ import Form from '../components/form';
 import LoadingScreen from '../components/loader';
 import { connect } from 'react-redux';
 import { LoadRecords } from '../actions/records';
+import { Logout } from '../actions/auth';
 
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
+
+const LogoutButton = (props) => {
+    const logout = () => {
+        props.dispatch(Logout());
+        props.navigation.navigate('login');
+    };
+    return (
+        <TouchableOpacity onPress={logout}>
+            <Text style={styles.logout}>Logout</Text>
+        </TouchableOpacity>
+    );
+};
+
+const WrapperLogoutButton = connect()(LogoutButton);
 
 class Home extends Component {
     constructor(props) {
@@ -42,23 +57,12 @@ class Home extends Component {
     };
 
     static navigationOptions = (props) => {
-        const logout = async () => {
-            try {
-                await firebase.auth().signOut();
-                props.navigation.navigate('login');
-            } catch (err) {
-                Alert.alert(err);
-            }
-        };
-
         return {
             header: () => (
                 <View style={styles.header}>
                     <View style={styles.headerLeft}>
                         <Text style={styles.title}>Gasht</Text>
-                        <TouchableOpacity onPress={logout}>
-                            <Text style={styles.logout}>Logout</Text>
-                        </TouchableOpacity>
+                        <WrapperLogoutButton {...props} />
                     </View>
                     <TouchableOpacity
                         style={styles.addAddressWrapper}
@@ -75,17 +79,6 @@ class Home extends Component {
         };
     };
 
-    logout = async () => {
-        this.setState({ processing: true });
-        try {
-            await firebase.auth().signOut();
-            this.props.navigation.navigate('login');
-        } catch (err) {
-            this.setState({ processing: false });
-            Alert.alert(err);
-        }
-    };
-
     search = () => {
         this.props.navigation.navigate('records', {
             filterName: this.state.filterName,
@@ -94,7 +87,9 @@ class Home extends Component {
     };
 
     render() {
-        return this.props.records.loading || !this.props.records.loaded ? (
+        return !this.props.user ||
+            this.props.records.loading ||
+            !this.props.records.loaded ? (
             <LoadingScreen />
         ) : (
             <ScrollView style={styles.container}>
