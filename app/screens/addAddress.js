@@ -196,8 +196,8 @@ class AddAddress extends Component {
                         value={this.state.suburbArea}
                     />
                     <Form
-                        label="Province"
-                        placeholder="Enter Province"
+                        label="Province/State/District"
+                        placeholder="Enter Province/State/District"
                         onUpdate={(val) => this.setState({ province: val })}
                         value={this.state.province}
                     />
