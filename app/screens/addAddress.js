@@ -20,6 +20,7 @@ class AddAddress extends Component {
             nationality: '',
             address: '',
             suburbArea: '',
+            province: '',
             country: '',
             phoneNumber: '',
             notes: '',
@@ -37,6 +38,7 @@ class AddAddress extends Component {
                 nationality: this.props.route.params.nationality || '',
                 address: this.props.route.params.address || '',
                 suburbArea: this.props.route.params.suburbArea || '',
+                province: this.props.route.params.province || '',
                 country: this.props.route.params.country || '',
                 phoneNumber: this.props.route.params.phoneNumber || '',
                 notes: this.props.route.params.notes || '',
@@ -64,6 +66,7 @@ class AddAddress extends Component {
             rest.nationality === '' ||
             rest.address === '' ||
             rest.suburbArea === '' ||
+            rest.province === '' ||
             rest.country === '' ||
             rest.phoneNumber === '' ||
             rest.zonePocket === '' ||
@@ -191,6 +194,12 @@ class AddAddress extends Component {
                         placeholder="Enter Suburb/Area"
                         onUpdate={(val) => this.setState({ suburbArea: val })}
                         value={this.state.suburbArea}
+                    />
+                    <Form
+                        label="Province"
+                        placeholder="Enter Province"
+                        onUpdate={(val) => this.setState({ province: val })}
+                        value={this.state.province}
                     />
                     <Form
                         label="Country"
