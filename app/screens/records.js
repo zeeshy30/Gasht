@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text } from 'react-native';
 import RecordTile from '../components/recordTile';
+import LoadingScreen from '../components/loader';
 import { connect } from 'react-redux';
 
 class Records extends Component {
     state = {
         findNearby: false,
+        processing: false,
         id: null,
     };
 
@@ -29,6 +31,7 @@ class Records extends Component {
     };
 
     findNearby = (id) => {
+        // this.setState({ processing: true });
         const filtered = Object.keys(this.props.records.data).filter(
             (record) => {
                 if (record === id) {
@@ -48,6 +51,7 @@ class Records extends Component {
                 }
             },
         );
+        // this.setState({ processing: false });
         return filtered;
     };
 
@@ -106,22 +110,39 @@ class Records extends Component {
 
         return (
             <ScrollView style={styles.container}>
-                {this.props.records.loaded &&
-                    displayRecords.map((record) => {
-                        return (
-                            <RecordTile
-                                key={record}
-                                dispatch={this.props.dispatch}
-                                {...this.props.records.data[record]}
-                                updating={this.props.records.updating}
-                                id={record}
-                                navigation={this.props.navigation}
-                                findNearby={(id) =>
-                                    this.setState({ findNearby: true, id })
-                                }
-                            />
-                        );
-                    })}
+                {this.state.processing ? (
+                    <LoadingScreen />
+                ) : (
+                    <>
+                        {this.props.records.loaded &&
+                            displayRecords.map((record) => {
+                                return (
+                                    <RecordTile
+                                        key={record}
+                                        dispatch={this.props.dispatch}
+                                        {...this.props.records.data[record]}
+                                        updating={this.props.records.updating}
+                                        id={record}
+                                        navigation={this.props.navigation}
+                                        findNearby={(id) =>
+                                            this.setState(
+                                                { processing: true },
+                                                () => {
+                                                    setTimeout(() => {
+                                                        this.setState({
+                                                            findNearby: true,
+                                                            processing: false,
+                                                            id,
+                                                        });
+                                                    }, 500);
+                                                },
+                                            )
+                                        }
+                                    />
+                                );
+                            })}
+                    </>
+                )}
             </ScrollView>
         );
     }

@@ -56,6 +56,29 @@ class Login extends Component {
             return;
         }
 
+        const emailSnapShot = await firebase
+            .firestore()
+            .collection('Users')
+            .where('email', '==', this.state.email.toLowerCase())
+            .get();
+
+        const users = [];
+        emailSnapShot.forEach((admin) => {
+            users.push(admin.data());
+        });
+
+        if (!users.length) {
+            this.setState({ processing: false });
+            Alert.alert('Invalid email');
+            return;
+        } else if (!users[0].approved) {
+            this.setState({ processing: false });
+            Alert.alert(
+                'Your account has not been approved yet, Please contact your admin',
+            );
+            return;
+        }
+
         this.props.dispatch(
             loginUser({
                 email: this.state.email,

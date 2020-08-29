@@ -26,7 +26,7 @@ const DeleteTile = (props) => {
                     <View style={{ margin: 10 }}>
                         <Text>Address: </Text>
                         <View style={styles.valueBox(40)}>
-                            <Text>{`${props.address}, ${props.suburbArea}, ${props.country}`}</Text>
+                            <Text>{`${props.address}, ${props.suburbArea}, ${props.province}, ${props.country}`}</Text>
                         </View>
                     </View>
                     <View style={styles.footer}>

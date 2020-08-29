@@ -89,6 +89,7 @@ export default class Register extends Component {
                     fullName,
                     adminEmail: localAdmin.toLowerCase(),
                     masjid: admins[0].masjid,
+                    approved: false,
                 });
             if (firebase.auth().currentUser) {
                 await firebase.auth().signOut();

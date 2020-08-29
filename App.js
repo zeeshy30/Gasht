@@ -20,6 +20,7 @@ import AddAddress from './app/screens/addAddress';
 import Records from './app/screens/records';
 import LocalAdminPanel from './app/screens/localAdminPanel';
 import DeletedRecords from './app/screens/deletedRecords';
+import SignupRequests from './app/screens/SignupRequests';
 
 const Stack = createStackNavigator();
 
@@ -92,6 +93,13 @@ const App = () => {
                     component={DeletedRecords}
                     options={{
                         title: 'Recycle Deleted Addresses',
+                    }}
+                />
+                <Stack.Screen
+                    name="signupRequests"
+                    component={SignupRequests}
+                    options={{
+                        title: 'Signup Requests',
                     }}
                 />
             </Stack.Navigator>
