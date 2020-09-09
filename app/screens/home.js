@@ -129,45 +129,53 @@ class Home extends Component {
                     <Text style={styles.filter}>Filter</Text>
                     <View style={styles.form}>
                         <Text style={styles.label}>Name:</Text>
-                        <Form
-                            icon={
-                                <Image
-                                    source={require('../../icons/name.png')}
-                                    style={{
-                                        marginRight: 5,
-                                        alignSelf: 'center',
-                                    }}
-                                    height={20}
-                                    width={20}
-                                />
-                            }
-                            placeholder="Name"
-                            onUpdate={(val) =>
-                                this.setState({ filterName: val })
-                            }
-                            value={this.state.filterName}
-                        />
+                        <View>
+                            <Form
+                                icon={
+                                    <Image
+                                        source={require('../../icons/name.png')}
+                                        style={
+                                            {
+                                                // marginRight: 5,
+                                                // alignSelf: 'center',
+                                            }
+                                        }
+                                        height={20}
+                                        width={20}
+                                    />
+                                }
+                                placeholder="Name"
+                                onUpdate={(val) =>
+                                    this.setState({ filterName: val })
+                                }
+                                value={this.state.filterName}
+                            />
+                        </View>
                     </View>
                     <View style={styles.form}>
                         <Text style={styles.label}>Address:</Text>
-                        <Form
-                            icon={
-                                <Image
-                                    source={require('../../icons/adress.png')}
-                                    style={{
-                                        marginRight: 5,
-                                        alignSelf: 'center',
-                                    }}
-                                    height={20}
-                                    width={20}
-                                />
-                            }
-                            placeholder="Address"
-                            onUpdate={(val) =>
-                                this.setState({ filterAddress: val })
-                            }
-                            value={this.state.filterAddress}
-                        />
+                        <View>
+                            <Form
+                                icon={
+                                    <Image
+                                        source={require('../../icons/adress.png')}
+                                        style={
+                                            {
+                                                // marginRight: 5,
+                                                // alignSelf: 'center',
+                                            }
+                                        }
+                                        height={20}
+                                        width={20}
+                                    />
+                                }
+                                placeholder="Address"
+                                onUpdate={(val) =>
+                                    this.setState({ filterAddress: val })
+                                }
+                                value={this.state.filterAddress}
+                            />
+                        </View>
                     </View>
                     <View style={styles.searchBox}>
                         <Button
@@ -269,10 +277,11 @@ const styles = StyleSheet.create({
     },
     form: {
         flexDirection: 'row',
+        justifyContent: 'flex-start',
     },
     label: {
-        fontSize: 18,
+        fontSize: 17,
         alignSelf: 'center',
-        // marginRight: 20,
+        marginRight: -10,
     },
 });

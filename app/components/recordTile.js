@@ -42,7 +42,31 @@ const RecordTile = (props) => {
             const { navigation, findNearby, dispatch, ...rest } = props;
 
             await dispatch(
-                UpdateRecord({ ...rest, lastVisitedDate: now }, dispatch),
+                UpdateRecord(
+                    { ...rest, lastVisitedDate: now, NAH: false },
+                    dispatch,
+                ),
+            );
+            setLastVisitedDate(now);
+        } catch (err) {
+            Alert.alert(err);
+        }
+    };
+
+    const updateNAH = async () => {
+        const date = new Date();
+        try {
+            const now = `${date.getDate()}-${
+                date.getMonth() + 1
+            }-${date.getFullYear()}`;
+
+            const { navigation, findNearby, dispatch, ...rest } = props;
+
+            await dispatch(
+                UpdateRecord(
+                    { ...rest, lastVisitedDate: now, NAH: true },
+                    dispatch,
+                ),
             );
             setLastVisitedDate(now);
         } catch (err) {
@@ -199,17 +223,36 @@ const RecordTile = (props) => {
 
                     <View style={styles.right}>
                         <View>
-                            <View style={{ flexDirection: 'row' }}>
-                                <Image
-                                    source={require('../../icons/VisitedToday.png')}
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                }}>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Image
+                                        source={require('../../icons/VisitedToday.png')}
+                                        style={{
+                                            marginRight: 5,
+                                            alignSelf: 'center',
+                                        }}
+                                        height={12}
+                                        width={12}
+                                    />
+                                    <Text>Last Visited:</Text>
+                                </View>
+                                <View
                                     style={{
-                                        marginRight: 5,
-                                        alignSelf: 'center',
-                                    }}
-                                    height={12}
-                                    width={12}
-                                />
-                                <Text>Last Visited:</Text>
+                                        alignSelf: 'flex-end',
+                                    }}>
+                                    <CheckBox
+                                        style={{
+                                            width: 60,
+                                        }}
+                                        isChecked={props.NAH}
+                                        onClick={() => {}}
+                                        leftText={'NAH'}
+                                    />
+                                </View>
                             </View>
                             <View style={styles.valueBox()}>
                                 <Text>{lastVisitedDate}</Text>
@@ -256,7 +299,9 @@ const RecordTile = (props) => {
                                     </Text>
                                     {/* {() => this.props.navigation.navigate('records')} */}
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.button}>
+                                <TouchableOpacity
+                                    style={styles.button}
+                                    onPress={updateNAH}>
                                     <Image
                                         source={require('../../icons/NotHome.png')}
                                         style={{

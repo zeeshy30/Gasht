@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, Alert, StyleSheet } from 'react-native';
+import { View, Image, Alert, StyleSheet, Text } from 'react-native';
 
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
@@ -34,15 +34,21 @@ class ForgotPassword extends Component {
             <LoadingScreen />
         ) : (
             <View style={styles.container}>
+                <Text>{'\n'}</Text>
                 <Logo />
+                <Text>{'\n'}</Text>
+                <Text>{'\n'}</Text>
+
                 <Form
                     icon={
                         <Image
                             source={require('../../icons/email.png')}
-                            style={{
-                                marginRight: 5,
-                                alignSelf: 'center',
-                            }}
+                            style={
+                                {
+                                    // marginRight: 5,
+                                    // alignSelf: 'center',
+                                }
+                            }
                             height={20}
                             width={20}
                         />

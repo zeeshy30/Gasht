@@ -169,7 +169,6 @@ class AddAddress extends Component {
                             <Image
                                 source={require('../../icons/adress.png')}
                                 style={{
-                                    marginRight: 5,
                                     alignSelf: 'center',
                                 }}
                                 height={20}
@@ -185,10 +184,12 @@ class AddAddress extends Component {
                         icon={
                             <Image
                                 source={require('../../icons/name.png')}
-                                style={{
-                                    marginRight: 5,
-                                    alignSelf: 'center',
-                                }}
+                                style={
+                                    {
+                                        // marginRight: 5,
+                                        // alignSelf: 'center',
+                                    }
+                                }
                                 height={20}
                                 width={20}
                             />
@@ -202,10 +203,12 @@ class AddAddress extends Component {
                         icon={
                             <Image
                                 source={require('../../icons/CountryofBirth.png')}
-                                style={{
-                                    marginRight: 5,
-                                    alignSelf: 'center',
-                                }}
+                                style={
+                                    {
+                                        // marginRight: 5,
+                                        // alignSelf: 'center',
+                                    }
+                                }
                                 height={20}
                                 width={20}
                             />
@@ -219,10 +222,12 @@ class AddAddress extends Component {
                         icon={
                             <Image
                                 source={require('../../icons/adress.png')}
-                                style={{
-                                    marginRight: 5,
-                                    alignSelf: 'center',
-                                }}
+                                style={
+                                    {
+                                        // marginRight: 5,
+                                        // alignSelf: 'center',
+                                    }
+                                }
                                 height={20}
                                 width={20}
                             />
@@ -237,10 +242,12 @@ class AddAddress extends Component {
                         icon={
                             <Image
                                 source={require('../../icons/Suburb.png')}
-                                style={{
-                                    marginRight: 5,
-                                    alignSelf: 'center',
-                                }}
+                                style={
+                                    {
+                                        // marginRight: 5,
+                                        // alignSelf: 'center',
+                                    }
+                                }
                                 height={20}
                                 width={20}
                             />
@@ -254,10 +261,12 @@ class AddAddress extends Component {
                         icon={
                             <Image
                                 source={require('../../icons/Suburb.png')}
-                                style={{
-                                    marginRight: 5,
-                                    alignSelf: 'center',
-                                }}
+                                style={
+                                    {
+                                        // marginRight: 5,
+                                        // alignSelf: 'center',
+                                    }
+                                }
                                 height={20}
                                 width={20}
                             />
@@ -271,10 +280,12 @@ class AddAddress extends Component {
                         icon={
                             <Image
                                 source={require('../../icons/Country.png')}
-                                style={{
-                                    marginRight: 5,
-                                    alignSelf: 'center',
-                                }}
+                                style={
+                                    {
+                                        // marginRight: 5,
+                                        // alignSelf: 'center',
+                                    }
+                                }
                                 height={20}
                                 width={20}
                             />
@@ -288,10 +299,12 @@ class AddAddress extends Component {
                         icon={
                             <Image
                                 source={require('../../icons/Phoneno.png')}
-                                style={{
-                                    marginRight: 5,
-                                    alignSelf: 'center',
-                                }}
+                                style={
+                                    {
+                                        // marginRight: 5,
+                                        // alignSelf: 'center',
+                                    }
+                                }
                                 height={20}
                                 width={20}
                             />
@@ -306,10 +319,12 @@ class AddAddress extends Component {
                         icon={
                             <Image
                                 source={require('../../icons/Zone.png')}
-                                style={{
-                                    marginRight: 5,
-                                    alignSelf: 'center',
-                                }}
+                                style={
+                                    {
+                                        // marginRight: 5,
+                                        // alignSelf: 'center',
+                                    }
+                                }
                                 height={20}
                                 width={20}
                             />

@@ -111,15 +111,19 @@ class Login extends Component {
                         <Text>{'\n'}</Text>
                         <Text>{'\n'}</Text>
                         <Logo />
+                        <Text>{'\n'}</Text>
+                        <Text>{'\n'}</Text>
                         <View style={styles.formContainer}>
                             <Form
                                 icon={
                                     <Image
                                         source={require('../../icons/email.png')}
-                                        style={{
-                                            marginRight: 5,
-                                            alignSelf: 'center',
-                                        }}
+                                        style={
+                                            {
+                                                // marginRight: 5,
+                                                // alignSelf: 'center',
+                                            }
+                                        }
                                         height={20}
                                         width={20}
                                     />
@@ -135,10 +139,12 @@ class Login extends Component {
                                 icon={
                                     <Image
                                         source={require('../../icons/password.png')}
-                                        style={{
-                                            marginRight: 5,
-                                            alignSelf: 'center',
-                                        }}
+                                        style={
+                                            {
+                                                // marginRight: 5,
+                                                // alignSelf: 'center',
+                                            }
+                                        }
                                         height={20}
                                         width={20}
                                     />

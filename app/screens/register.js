@@ -30,6 +30,7 @@ export default class Register extends Component {
             password: '',
             confirmPassword: '',
             localAdmin: '',
+            phoneNo: null,
         };
     }
 
@@ -49,6 +50,7 @@ export default class Register extends Component {
             email,
             password,
             confirmPassword,
+            phoneNo,
         } = this.state;
 
         if (password !== confirmPassword) {
@@ -61,7 +63,8 @@ export default class Register extends Component {
             fullName === '' ||
             email === '' ||
             password === '' ||
-            confirmPassword === ''
+            confirmPassword === '' ||
+            !phoneNo
         ) {
             Alert.alert('Please fill all the fields.');
             return;
@@ -82,6 +85,7 @@ export default class Register extends Component {
                     email: email.toLowerCase(),
                     fullName,
                     masjid,
+                    phoneNo,
                     masjidAddress,
                     isLocalAdmin: true,
                     adminEmail: 'zee@gmail.com',
@@ -110,6 +114,7 @@ export default class Register extends Component {
             password,
             confirmPassword,
             localAdmin,
+            phoneNo,
         } = this.state;
 
         if (password !== confirmPassword) {
@@ -121,6 +126,7 @@ export default class Register extends Component {
             localAdmin === '' ||
             email === '' ||
             password === '' ||
+            !phoneNo ||
             confirmPassword === ''
         ) {
             Alert.alert('Please fill all the fields.');
@@ -163,6 +169,8 @@ export default class Register extends Component {
                     masjid: admins[0].masjid,
                     masjidAddress: admins[0].masjidAddress,
                     approved: false,
+                    disapproved: false,
+                    phoneNo,
                 });
             if (firebase.auth().currentUser) {
                 await firebase.auth().signOut();
@@ -190,10 +198,12 @@ export default class Register extends Component {
                                     icon={
                                         <Image
                                             source={require('../../icons/masjid.png')}
-                                            style={{
-                                                marginRight: 5,
-                                                alignSelf: 'center',
-                                            }}
+                                            style={
+                                                {
+                                                    // marginRight: 5,
+                                                    // alignSelf: 'center',
+                                                }
+                                            }
                                             height={20}
                                             width={20}
                                         />
@@ -215,10 +225,12 @@ export default class Register extends Component {
                                     icon={
                                         <Image
                                             source={require('../../icons/masjidAddress.png')}
-                                            style={{
-                                                marginRight: 5,
-                                                alignSelf: 'center',
-                                            }}
+                                            style={
+                                                {
+                                                    // marginRight: 5,
+                                                    // alignSelf: 'center',
+                                                }
+                                            }
                                             height={20}
                                             width={20}
                                         />
@@ -241,10 +253,12 @@ export default class Register extends Component {
                                 icon={
                                     <Image
                                         source={require('../../icons/name.png')}
-                                        style={{
-                                            marginRight: 5,
-                                            alignSelf: 'center',
-                                        }}
+                                        style={
+                                            {
+                                                // marginRight: 5,
+                                                // alignSelf: 'center',
+                                            }
+                                        }
                                         height={20}
                                         width={20}
                                     />
@@ -261,10 +275,12 @@ export default class Register extends Component {
                                 icon={
                                     <Image
                                         source={require('../../icons/email.png')}
-                                        style={{
-                                            marginRight: 5,
-                                            alignSelf: 'center',
-                                        }}
+                                        style={
+                                            {
+                                                // marginRight: 5,
+                                                // alignSelf: 'center',
+                                            }
+                                        }
                                         height={20}
                                         width={20}
                                     />
@@ -280,10 +296,12 @@ export default class Register extends Component {
                                 icon={
                                     <Image
                                         source={require('../../icons/password.png')}
-                                        style={{
-                                            marginRight: 5,
-                                            alignSelf: 'center',
-                                        }}
+                                        style={
+                                            {
+                                                // marginRight: 5,
+                                                // alignSelf: 'center',
+                                            }
+                                        }
                                         height={20}
                                         width={20}
                                     />
@@ -301,10 +319,12 @@ export default class Register extends Component {
                                 icon={
                                     <Image
                                         source={require('../../icons/password.png')}
-                                        style={{
-                                            marginRight: 5,
-                                            alignSelf: 'center',
-                                        }}
+                                        style={
+                                            {
+                                                // marginRight: 5,
+                                                // alignSelf: 'center',
+                                            }
+                                        }
                                         height={20}
                                         width={20}
                                     />
@@ -315,20 +335,45 @@ export default class Register extends Component {
                                     this.setState({ confirmPassword: val })
                                 }
                                 ref={(input) => (this.confirmPassword = input)}
+                                onSubmitEditing={() => this.phoneNum.focus()}
+                                value={this.state.confirmPassword}
+                            />
+                            <Form
+                                icon={
+                                    <Image
+                                        source={require('../../icons/Phoneno.png')}
+                                        style={
+                                            {
+                                                // marginRight: 5,
+                                                // alignSelf: 'center',
+                                            }
+                                        }
+                                        height={20}
+                                        width={20}
+                                    />
+                                }
+                                placeholder="Phone Number With Country Code"
+                                onUpdate={(val) =>
+                                    this.setState({ phoneNo: val })
+                                }
+                                ref={(input) => (this.phoneNum = input)}
                                 onSubmitEditing={() =>
                                     !registerMosque && this.localAdmin.focus()
                                 }
-                                value={this.state.confirmPassword}
+                                value={this.state.phoneNo}
+                                keyboardType="phone-pad"
                             />
                             {!registerMosque && (
                                 <Form
                                     icon={
                                         <Image
                                             source={require('../../icons/email.png')}
-                                            style={{
-                                                marginRight: 5,
-                                                alignSelf: 'center',
-                                            }}
+                                            style={
+                                                {
+                                                    // marginRight: 5,
+                                                    // alignSelf: 'center',
+                                                }
+                                            }
                                             height={20}
                                             width={20}
                                         />
