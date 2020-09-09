@@ -6,6 +6,7 @@ import {
     Text,
     TouchableOpacity,
     Alert,
+    Image,
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -84,7 +85,18 @@ const RecordTile = (props) => {
                                     flexDirection: 'row',
                                     justifyContent: 'space-between',
                                 }}>
-                                <Text>Name: </Text>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Image
+                                        source={require('../../icons/name.png')}
+                                        style={{
+                                            marginRight: 5,
+                                            alignSelf: 'center',
+                                        }}
+                                        height={12}
+                                        width={12}
+                                    />
+                                    <Text>Name: </Text>
+                                </View>
                                 <CheckBox
                                     style={{
                                         width: 100,
@@ -99,29 +111,86 @@ const RecordTile = (props) => {
                             </View>
                         </View>
                         <View>
-                            <Text>Nationality/Language: </Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <Image
+                                    source={require('../../icons/CountryofBirth.png')}
+                                    style={{
+                                        marginRight: 5,
+                                        alignSelf: 'center',
+                                    }}
+                                    height={12}
+                                    width={12}
+                                />
+                                <Text>Nationality/Language: </Text>
+                            </View>
                             <View style={styles.valueBox()}>
                                 <Text>{props.nationality}</Text>
                             </View>
                         </View>
                         <View>
-                            <Text>Address: </Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <Image
+                                    source={require('../../icons/adress.png')}
+                                    style={{
+                                        marginRight: 5,
+                                        alignSelf: 'center',
+                                    }}
+                                    height={12}
+                                    width={12}
+                                />
+                                <Text>Address: </Text>
+                            </View>
                             <View style={styles.valueBox(60)}>
                                 <Text>{`${props.address}, ${props.suburbArea}, ${props.province}, ${props.country}`}</Text>
                             </View>
                         </View>
                         <View>
-                            <Text>Suburbs: </Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <Image
+                                    source={require('../../icons/Suburb.png')}
+                                    style={{
+                                        marginRight: 5,
+                                        alignSelf: 'center',
+                                    }}
+                                    height={12}
+                                    width={12}
+                                />
+                                <Text>Suburbs: </Text>
+                            </View>
                             <View style={styles.valueBox(40)}>
                                 <Text>{`${props.suburbArea}`}</Text>
                             </View>
-                            <Text style={{ alignSelf: 'flex-end' }}>
-                                Zone/Pocket: {props.zonePocket}
-                            </Text>
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    alignSelf: 'flex-end',
+                                }}>
+                                <Image
+                                    source={require('../../icons/Zone.png')}
+                                    style={{
+                                        marginRight: 5,
+                                        alignSelf: 'center',
+                                    }}
+                                    height={12}
+                                    width={12}
+                                />
+                                <Text style={{ alignSelf: 'flex-end' }}>
+                                    Zone/Pocket: {props.zonePocket}
+                                </Text>
+                            </View>
                         </View>
                         <TouchableOpacity
                             style={styles.button}
                             onPress={() => props.findNearby(props.id)}>
+                            <Image
+                                source={require('../../icons/Nearbyaddress.png')}
+                                style={{
+                                    marginRight: 5,
+                                    alignSelf: 'center',
+                                }}
+                                height={12}
+                                width={12}
+                            />
                             <Text style={styles.buttonText}>
                                 Find Nearby Address
                             </Text>
@@ -130,13 +199,35 @@ const RecordTile = (props) => {
 
                     <View style={styles.right}>
                         <View>
-                            <Text>Last Visited:</Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <Image
+                                    source={require('../../icons/VisitedToday.png')}
+                                    style={{
+                                        marginRight: 5,
+                                        alignSelf: 'center',
+                                    }}
+                                    height={12}
+                                    width={12}
+                                />
+                                <Text>Last Visited:</Text>
+                            </View>
                             <View style={styles.valueBox()}>
                                 <Text>{lastVisitedDate}</Text>
                             </View>
                         </View>
                         <View>
-                            <Text>Notes:</Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <Image
+                                    source={require('../../icons/Notes.png')}
+                                    style={{
+                                        marginRight: 5,
+                                        alignSelf: 'center',
+                                    }}
+                                    height={12}
+                                    width={12}
+                                />
+                                <Text>Notes:</Text>
+                            </View>
                             <ScrollView style={styles.valueBox(130)}>
                                 <Text>{props.notes}</Text>
                             </ScrollView>
@@ -151,12 +242,30 @@ const RecordTile = (props) => {
                                 <TouchableOpacity
                                     style={styles.button}
                                     onPress={updateLastVisited}>
+                                    <Image
+                                        source={require('../../icons/VisitedToday.png')}
+                                        style={{
+                                            marginRight: 5,
+                                            alignSelf: 'center',
+                                        }}
+                                        height={12}
+                                        width={12}
+                                    />
                                     <Text style={styles.buttonText}>
                                         Visited Today
                                     </Text>
                                     {/* {() => this.props.navigation.navigate('records')} */}
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.button}>
+                                    <Image
+                                        source={require('../../icons/NotHome.png')}
+                                        style={{
+                                            marginRight: 5,
+                                            alignSelf: 'center',
+                                        }}
+                                        height={12}
+                                        width={12}
+                                    />
                                     <Text style={styles.buttonText}>
                                         NAH Today
                                     </Text>
@@ -176,6 +285,15 @@ const RecordTile = (props) => {
                                         backgroundColor: '#FCD12A',
                                     }}
                                     onPress={edit}>
+                                    <Image
+                                        source={require('../../icons/edit.png')}
+                                        style={{
+                                            marginRight: 5,
+                                            alignSelf: 'center',
+                                        }}
+                                        height={12}
+                                        width={12}
+                                    />
                                     <Text style={styles.buttonText}>Edit</Text>
                                     {/* {() => this.props.navigation.navigate('records')} */}
                                 </TouchableOpacity>
@@ -185,6 +303,15 @@ const RecordTile = (props) => {
                                         backgroundColor: '#E12901',
                                     }}
                                     onPress={() => setShowDialog(true)}>
+                                    <Image
+                                        source={require('../../icons/Delete.png')}
+                                        style={{
+                                            marginRight: 5,
+                                            alignSelf: 'center',
+                                        }}
+                                        height={12}
+                                        width={12}
+                                    />
                                     <Text style={styles.buttonText}>
                                         Delete
                                     </Text>
@@ -240,6 +367,7 @@ const styles = StyleSheet.create({
         padding: 4,
         minWidth: '40%',
         backgroundColor: 'grey',
+        flexDirection: 'row',
         justifyContent: 'center',
         shadowColor: '#000',
         shadowOffset: { width: 0.5, height: 0.5 },

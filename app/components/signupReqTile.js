@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 
 const SignupReqTile = (props) => {
     return (
@@ -17,6 +17,22 @@ const SignupReqTile = (props) => {
                         <Text>{props.email}</Text>
                     </View>
                 </View>
+                {props.isAdmin && (
+                    <>
+                        <View style={{ margin: 10 }}>
+                            <Text>Masjid: </Text>
+                            <View style={styles.valueBox()}>
+                                <Text>{props.masjid}</Text>
+                            </View>
+                        </View>
+                        <View style={{ margin: 10 }}>
+                            <Text>Masjid Address: </Text>
+                            <View style={styles.valueBox(40)}>
+                                <Text>{props.masjidAddress}</Text>
+                            </View>
+                        </View>
+                    </>
+                )}
                 <View style={styles.footer}>
                     {/* <TouchableOpacity
                         // onPress={restore}
@@ -29,11 +45,53 @@ const SignupReqTile = (props) => {
                     <TouchableOpacity
                         onPress={() => props.approveUser(props.id)}
                         style={{
-                            ...styles.button,
+                            ...styles.button(props.isAdmin),
                             backgroundColor: 'green',
                         }}>
-                        <Text style={styles.buttonText}>Approve</Text>
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                            }}>
+                            <Image
+                                source={require('../../icons/Approve.png')}
+                                style={{
+                                    marginRight: 5,
+                                    alignSelf: 'center',
+                                }}
+                                height={13}
+                                width={13}
+                            />
+                            <Text style={styles.buttonText}>Approve</Text>
+                        </View>
                     </TouchableOpacity>
+                    {props.isAdmin && (
+                        <TouchableOpacity
+                            onPress={() => props.disapproveUser(props.id)}
+                            style={{
+                                ...styles.button(props.isAdmin),
+                                backgroundColor: 'red',
+                            }}>
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                }}>
+                                <Image
+                                    source={require('../../icons/Delete.png')}
+                                    style={{
+                                        marginRight: 5,
+                                        alignSelf: 'center',
+                                    }}
+                                    height={13}
+                                    width={13}
+                                />
+                                <Text style={styles.buttonText}>
+                                    Disapprove
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                    )}
                 </View>
             </View>
         </>
@@ -68,12 +126,12 @@ const styles = StyleSheet.create({
         borderRadius: 3,
         padding: 2,
     }),
-    button: {
+    button: (width) => ({
         height: 24,
         backgroundColor: 'grey',
-        width: '100%',
+        width: width ? '50%' : '100%',
         justifyContent: 'center',
-    },
+    }),
     buttonText: {
         alignSelf: 'center',
         color: 'white',

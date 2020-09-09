@@ -15,13 +15,15 @@ export const ActionTypes = {
     DELETE_RECORD: 'DELETE_RECORD',
     DELETE_RECORD_FAILED: 'DELETE_RECORD_FAILED',
     DELETE_RECORD_SUCCESS: 'DELETE_RECORD_SUCCESS',
+    RESET: 'RESET',
 };
 
-const LoadRecordsFun = async (dispatch) => {
+const LoadRecordsFun = async (masjid, dispatch) => {
     try {
         const RecordSnapcshots = await firebase
             .firestore()
             .collection('Records')
+            .where('masjid', '==', masjid)
             .get();
 
         const records = {};
@@ -46,8 +48,8 @@ const UpdateRecordFun = async (data, dispatch) => {
     }
 };
 
-export const LoadRecords = (dispatch) => {
-    LoadRecordsFun(dispatch);
+export const LoadRecords = (masjid, dispatch) => {
+    LoadRecordsFun(masjid, dispatch);
     return {
         type: ActionTypes.LOAD_RECORDS,
     };

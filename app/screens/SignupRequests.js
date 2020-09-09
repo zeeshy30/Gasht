@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, Text, StyleSheet } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import SignupReqTile from '../components/signupReqTile';
 import LoadingScreen from '../components/loader';
@@ -16,12 +16,20 @@ const SignupRequests = (props) => {
         const getRequests = async () => {
             setProcessing(true);
 
-            const requestSnapshots = await firebase
-                .firestore()
-                .collection('Users')
-                .where('adminEmail', '==', props.user.email)
-                .where('approved', '==', false)
-                .get();
+            const requestSnapshots = props.user.isAdmin
+                ? await firebase
+                      .firestore()
+                      .collection('Users')
+                      .where('adminEmail', '==', props.user.email)
+                      .where('approved', '==', false)
+                      .where('disapproved', '==', false)
+                      .get()
+                : await firebase
+                      .firestore()
+                      .collection('Users')
+                      .where('adminEmail', '==', props.user.email)
+                      .where('approved', '==', false)
+                      .get();
 
             const users = {};
             requestSnapshots.forEach((user) => {
@@ -31,7 +39,7 @@ const SignupRequests = (props) => {
             setRequests(users);
         };
         getRequests();
-    }, [props.user.email]);
+    }, [props.user.email, props.user.isAdmin]);
 
     const approveUser = async (id) => {
         setupdating(true);
@@ -40,6 +48,18 @@ const SignupRequests = (props) => {
             .collection('Users')
             .doc(id)
             .update({ approved: true });
+        const { [id]: val, ...rest } = requests;
+        setRequests(rest);
+        setupdating(false);
+    };
+
+    const disapproveUser = async (id) => {
+        setupdating(true);
+        await firebase
+            .firestore()
+            .collection('Users')
+            .doc(id)
+            .update({ disapproved: true });
         const { [id]: val, ...rest } = requests;
         setRequests(rest);
         setupdating(false);
@@ -54,11 +74,14 @@ const SignupRequests = (props) => {
                 textContent={'Updating...'}
                 textStyle={styles.spinnerTextStyle}
             />
+            {Object.keys(requests).length === 0 && <Text>No Requests</Text>}
             {Object.keys(requests).map((requestId) => (
                 <SignupReqTile
                     {...requests[requestId]}
                     key={requestId}
                     approveUser={approveUser}
+                    disapproveUser={disapproveUser}
+                    isAdmin={props.user.isAdmin}
                     id={requestId}
                 />
             ))}

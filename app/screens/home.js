@@ -6,7 +6,7 @@ import {
     StyleSheet,
     TouchableOpacity,
     Button,
-    Alert,
+    Image,
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Form from '../components/form';
@@ -20,8 +20,13 @@ import '@react-native-firebase/auth';
 
 const LogoutButton = (props) => {
     const logout = () => {
-        props.dispatch(Logout());
-        props.navigation.navigate('login');
+        firebase
+            .auth()
+            .signOut()
+            .then(() => {
+                props.dispatch(Logout(props.dispatch));
+                props.navigation.navigate('login');
+            });
     };
     return (
         <TouchableOpacity onPress={logout}>
@@ -52,8 +57,17 @@ class Home extends Component {
         }
     }
 
+    componentDidUpdate() {
+        const user = firebase.auth().currentUser;
+        if (user && !this.props.records.loading && !this.props.records.loaded) {
+            this.getRecords();
+        }
+    }
+
     getRecords = () => {
-        this.props.dispatch(LoadRecords(this.props.dispatch));
+        this.props.dispatch(
+            LoadRecords(this.props.user.masjid, this.props.dispatch),
+        );
     };
 
     static navigationOptions = (props) => {
@@ -97,7 +111,9 @@ class Home extends Component {
                     <Text style={styles.masjidName}>
                         {this.props.user.masjid}
                     </Text>
-                    <Text style={styles.address}>Address of the Masjid</Text>
+                    <Text style={styles.address}>
+                        {this.props.user.masjidAddress}
+                    </Text>
                 </View>
                 <Text style={styles.recordNum}>Gasht Records</Text>
                 <Text style={styles.recordNum}>
@@ -114,6 +130,17 @@ class Home extends Component {
                     <View style={styles.form}>
                         <Text style={styles.label}>Name:</Text>
                         <Form
+                            icon={
+                                <Image
+                                    source={require('../../icons/name.png')}
+                                    style={{
+                                        marginRight: 5,
+                                        alignSelf: 'center',
+                                    }}
+                                    height={20}
+                                    width={20}
+                                />
+                            }
                             placeholder="Name"
                             onUpdate={(val) =>
                                 this.setState({ filterName: val })
@@ -124,6 +151,17 @@ class Home extends Component {
                     <View style={styles.form}>
                         <Text style={styles.label}>Address:</Text>
                         <Form
+                            icon={
+                                <Image
+                                    source={require('../../icons/adress.png')}
+                                    style={{
+                                        marginRight: 5,
+                                        alignSelf: 'center',
+                                    }}
+                                    height={20}
+                                    width={20}
+                                />
+                            }
                             placeholder="Address"
                             onUpdate={(val) =>
                                 this.setState({ filterAddress: val })

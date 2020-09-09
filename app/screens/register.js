@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    View,
+    TouchableOpacity,
+    Alert,
+    Image,
+} from 'react-native';
 
 import LoadingScreen from '../components/loader';
 import Form from '../components/form';
@@ -15,6 +22,9 @@ export default class Register extends Component {
         super(props);
         this.state = {
             processing: false,
+            registerMosque: this.props.route.params.registerMosque,
+            masjid: '',
+            masjidAddress: '',
             fullName: '',
             email: '',
             password: '',
@@ -31,7 +41,69 @@ export default class Register extends Component {
         this.setState({ password: val });
     };
 
+    registerMasjid = async () => {
+        const {
+            masjid,
+            masjidAddress,
+            fullName,
+            email,
+            password,
+            confirmPassword,
+        } = this.state;
+
+        if (password !== confirmPassword) {
+            Alert.alert("Passwords don't match.");
+            return;
+        }
+        if (
+            masjid === '' ||
+            masjidAddress === '' ||
+            fullName === '' ||
+            email === '' ||
+            password === '' ||
+            confirmPassword === ''
+        ) {
+            Alert.alert('Please fill all the fields.');
+            return;
+        }
+
+        this.setState({ processing: true });
+
+        try {
+            const res = await firebase
+                .auth()
+                .createUserWithEmailAndPassword(email, password);
+
+            await firebase
+                .firestore()
+                .collection('Users')
+                .doc(res.user.uid)
+                .set({
+                    email: email.toLowerCase(),
+                    fullName,
+                    masjid,
+                    masjidAddress,
+                    isLocalAdmin: true,
+                    adminEmail: 'zee@gmail.com',
+                    approved: false,
+                    disapproved: false,
+                });
+
+            if (firebase.auth().currentUser) {
+                await firebase.auth().signOut();
+            }
+            this.props.navigation.navigate('login');
+        } catch (err) {
+            this.setState({ processing: false });
+            Alert.alert(err);
+        }
+    };
+
     SignUp = async () => {
+        if (this.state.registerMosque) {
+            this.registerMasjid();
+            return;
+        }
         const {
             fullName,
             email,
@@ -89,6 +161,7 @@ export default class Register extends Component {
                     fullName,
                     adminEmail: localAdmin.toLowerCase(),
                     masjid: admins[0].masjid,
+                    masjidAddress: admins[0].masjidAddress,
                     approved: false,
                 });
             if (firebase.auth().currentUser) {
@@ -102,6 +175,7 @@ export default class Register extends Component {
     };
 
     render() {
+        const { registerMosque } = this.state;
         return (
             <>
                 {this.state.processing ? (
@@ -111,15 +185,90 @@ export default class Register extends Component {
                         <View style={styles.formContainer}>
                             <Text>{'\n'}</Text>
                             <Logo />
+                            {registerMosque && (
+                                <Form
+                                    icon={
+                                        <Image
+                                            source={require('../../icons/masjid.png')}
+                                            style={{
+                                                marginRight: 5,
+                                                alignSelf: 'center',
+                                            }}
+                                            height={20}
+                                            width={20}
+                                        />
+                                    }
+                                    placeholder="Masjid Name"
+                                    onUpdate={(val) =>
+                                        this.setState({ masjid: val })
+                                    }
+                                    ref={(input) => (this.masjid = input)}
+                                    value={this.state.masjid}
+                                    onSubmitEditing={() =>
+                                        this.masjidAddress.focus()
+                                    }
+                                    keyboardType="email-address"
+                                />
+                            )}
+                            {registerMosque && (
+                                <Form
+                                    icon={
+                                        <Image
+                                            source={require('../../icons/masjidAddress.png')}
+                                            style={{
+                                                marginRight: 5,
+                                                alignSelf: 'center',
+                                            }}
+                                            height={20}
+                                            width={20}
+                                        />
+                                    }
+                                    placeholder="Masjid Address"
+                                    onUpdate={(val) =>
+                                        this.setState({ masjidAddress: val })
+                                    }
+                                    ref={(input) =>
+                                        (this.masjidAddress = input)
+                                    }
+                                    onSubmitEditing={() =>
+                                        this.fullName.focus()
+                                    }
+                                    value={this.state.masjidAddress}
+                                    keyboardType="email-address"
+                                />
+                            )}
                             <Form
+                                icon={
+                                    <Image
+                                        source={require('../../icons/name.png')}
+                                        style={{
+                                            marginRight: 5,
+                                            alignSelf: 'center',
+                                        }}
+                                        height={20}
+                                        width={20}
+                                    />
+                                }
                                 placeholder="Full Name"
                                 onUpdate={(val) =>
                                     this.setState({ fullName: val })
                                 }
+                                ref={(input) => (this.fullName = input)}
                                 onSubmitEditing={() => this.email.focus()}
                                 value={this.state.fullName}
                             />
                             <Form
+                                icon={
+                                    <Image
+                                        source={require('../../icons/email.png')}
+                                        style={{
+                                            marginRight: 5,
+                                            alignSelf: 'center',
+                                        }}
+                                        height={20}
+                                        width={20}
+                                    />
+                                }
                                 placeholder="Email"
                                 onUpdate={this.setEmail}
                                 onSubmitEditing={() => this.password.focus()}
@@ -128,6 +277,17 @@ export default class Register extends Component {
                                 value={this.state.email}
                             />
                             <Form
+                                icon={
+                                    <Image
+                                        source={require('../../icons/password.png')}
+                                        style={{
+                                            marginRight: 5,
+                                            alignSelf: 'center',
+                                        }}
+                                        height={20}
+                                        width={20}
+                                    />
+                                }
                                 placeholder="Password"
                                 secureTextEntry={true}
                                 onUpdate={this.setPassword}
@@ -138,24 +298,50 @@ export default class Register extends Component {
                                 value={this.state.password}
                             />
                             <Form
+                                icon={
+                                    <Image
+                                        source={require('../../icons/password.png')}
+                                        style={{
+                                            marginRight: 5,
+                                            alignSelf: 'center',
+                                        }}
+                                        height={20}
+                                        width={20}
+                                    />
+                                }
                                 placeholder="Confirm Password"
                                 secureTextEntry={true}
                                 onUpdate={(val) =>
                                     this.setState({ confirmPassword: val })
                                 }
                                 ref={(input) => (this.confirmPassword = input)}
-                                onSubmitEditing={() => this.localAdmin.focus()}
+                                onSubmitEditing={() =>
+                                    !registerMosque && this.localAdmin.focus()
+                                }
                                 value={this.state.confirmPassword}
                             />
-                            <Form
-                                placeholder="Local Admin Email"
-                                onUpdate={(val) =>
-                                    this.setState({ localAdmin: val })
-                                }
-                                ref={(input) => (this.localAdmin = input)}
-                                value={this.state.localAdmin}
-                                keyboardType="email-address"
-                            />
+                            {!registerMosque && (
+                                <Form
+                                    icon={
+                                        <Image
+                                            source={require('../../icons/email.png')}
+                                            style={{
+                                                marginRight: 5,
+                                                alignSelf: 'center',
+                                            }}
+                                            height={20}
+                                            width={20}
+                                        />
+                                    }
+                                    placeholder="Local Admin Email"
+                                    onUpdate={(val) =>
+                                        this.setState({ localAdmin: val })
+                                    }
+                                    ref={(input) => (this.localAdmin = input)}
+                                    value={this.state.localAdmin}
+                                    keyboardType="email-address"
+                                />
+                            )}
                         </View>
                         <Button onPress={this.SignUp} text="Sign up" />
 

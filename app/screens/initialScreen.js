@@ -14,6 +14,16 @@ class InitialScreen extends Component {
         this.fetchData();
     }
 
+    componentDidUpdate() {
+        if (this.props.auth.authSuccess) {
+            if (this.props.auth.user.isAdmin) {
+                this.props.navigation.navigate('adminPanel');
+            } else {
+                this.props.navigation.navigate('home');
+            }
+        }
+    }
+
     fetchData = async () => {
         const user = firebase.auth().currentUser;
         if (user) {
@@ -25,7 +35,6 @@ class InitialScreen extends Component {
                     .get();
                 const details = doc.data();
                 this.props.dispatch(LoginSuccess(details));
-                this.props.navigation.navigate('home');
             } catch (err) {
                 Alert.alert(err);
                 firebase.auth().signOut();
@@ -52,7 +61,11 @@ class InitialScreen extends Component {
     }
 }
 
-export default connect()(InitialScreen);
+const mapStateToProps = (state) => {
+    return { auth: state.auth };
+};
+
+export default connect(mapStateToProps)(InitialScreen);
 
 const styles = StyleSheet.create({
     container: {

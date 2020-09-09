@@ -19,6 +19,7 @@ import Home from './app/screens/home';
 import AddAddress from './app/screens/addAddress';
 import Records from './app/screens/records';
 import LocalAdminPanel from './app/screens/localAdminPanel';
+import AdminPanel from './app/screens/adminPanel';
 import DeletedRecords from './app/screens/deletedRecords';
 import SignupRequests from './app/screens/SignupRequests';
 
@@ -51,9 +52,9 @@ const App = () => {
                 <Stack.Screen
                     name="register"
                     component={Register}
-                    options={{
-                        title: 'Register',
-                    }}
+                    options={({ route }) => ({
+                        title: route.params.title,
+                    })}
                 />
                 <Stack.Screen
                     name="forgotpassword"
@@ -86,6 +87,13 @@ const App = () => {
                     component={LocalAdminPanel}
                     options={{
                         title: 'Local Admin Panel',
+                    }}
+                />
+                <Stack.Screen
+                    name="adminPanel"
+                    component={AdminPanel}
+                    options={{
+                        headerShown: false,
                     }}
                 />
                 <Stack.Screen

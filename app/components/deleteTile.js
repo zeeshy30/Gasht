@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import { UpdateRecord, DeleteRecord } from '../actions/records';
 
 const DeleteTile = (props) => {
@@ -36,7 +36,22 @@ const DeleteTile = (props) => {
                                 ...styles.button,
                                 backgroundColor: 'green',
                             }}>
-                            <Text style={styles.buttonText}>Restore</Text>
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                }}>
+                                <Image
+                                    source={require('../../icons/restore.png')}
+                                    style={{
+                                        marginRight: 5,
+                                        alignSelf: 'center',
+                                    }}
+                                    height={12}
+                                    width={12}
+                                />
+                                <Text style={styles.buttonText}>Restore</Text>
+                            </View>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={deleteRecord}
@@ -44,7 +59,22 @@ const DeleteTile = (props) => {
                                 ...styles.button,
                                 backgroundColor: 'red',
                             }}>
-                            <Text style={styles.buttonText}>Delete</Text>
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                }}>
+                                <Image
+                                    source={require('../../icons/Delete.png')}
+                                    style={{
+                                        marginRight: 5,
+                                        alignSelf: 'center',
+                                    }}
+                                    height={12}
+                                    width={12}
+                                />
+                                <Text style={styles.buttonText}>Delete</Text>
+                            </View>
                         </TouchableOpacity>
                     </View>
                 </View>

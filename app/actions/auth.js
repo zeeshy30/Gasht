@@ -1,6 +1,7 @@
 import { Alert } from 'react-native';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
+import { ActionTypes as RecordsActionTypes } from './records';
 
 export const ActionTypes = {
     LOGIN: 'LOGIN',
@@ -29,8 +30,8 @@ const LoginUser = async (email, password, dispatch) => {
     }
 };
 
-export const Login = ({ email, password, dispatch, navigation }) => {
-    LoginUser(email, password, dispatch, navigation);
+export const Login = ({ email, password, dispatch }) => {
+    LoginUser(email, password, dispatch);
     return {
         type: ActionTypes.LOGIN,
     };
@@ -50,9 +51,7 @@ export const LoginSuccess = (data) => {
     };
 };
 
-export const Logout = () => {
-    firebase.auth().signOut();
-    return {
-        type: ActionTypes.LOGOUT,
-    };
+export const Logout = (dispatch) => {
+    dispatch({ type: RecordsActionTypes.RESET });
+    return { type: ActionTypes.LOGOUT };
 };

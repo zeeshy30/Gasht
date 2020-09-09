@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, ScrollView, Alert } from 'react-native';
+import { StyleSheet, View, ScrollView, Alert, Image } from 'react-native';
 import { connect } from 'react-redux';
 
 import Form from '../components/form';
@@ -165,24 +165,68 @@ class AddAddress extends Component {
                             key: 'AIzaSyA2JF5CcJ6Thk2oEA_fglf_PJTdqzDvRpw',
                             language: 'en',
                         }}
+                        renderLeftButton={() => (
+                            <Image
+                                source={require('../../icons/adress.png')}
+                                style={{
+                                    marginRight: 5,
+                                    alignSelf: 'center',
+                                }}
+                                height={20}
+                                width={20}
+                            />
+                        )}
                     />
                 </View>
                 <ScrollView
                     style={styles.formStyle}
                     contentContainerStyle={styles.contentFormStyle}>
                     <Form
+                        icon={
+                            <Image
+                                source={require('../../icons/name.png')}
+                                style={{
+                                    marginRight: 5,
+                                    alignSelf: 'center',
+                                }}
+                                height={20}
+                                width={20}
+                            />
+                        }
                         label="Full Name"
                         placeholder="Enter Name"
                         onUpdate={(val) => this.setState({ fullName: val })}
                         value={this.state.fullName}
                     />
                     <Form
+                        icon={
+                            <Image
+                                source={require('../../icons/CountryofBirth.png')}
+                                style={{
+                                    marginRight: 5,
+                                    alignSelf: 'center',
+                                }}
+                                height={20}
+                                width={20}
+                            />
+                        }
                         label="Ethnicity/Country of Birth"
                         placeholder="Enter the country of birth/origin"
                         onUpdate={(val) => this.setState({ nationality: val })}
                         value={this.state.nationality}
                     />
                     <Form
+                        icon={
+                            <Image
+                                source={require('../../icons/adress.png')}
+                                style={{
+                                    marginRight: 5,
+                                    alignSelf: 'center',
+                                }}
+                                height={20}
+                                width={20}
+                            />
+                        }
                         label="Full Address"
                         placeholder="Enter
                         Present Address"
@@ -190,24 +234,68 @@ class AddAddress extends Component {
                         value={this.state.address}
                     />
                     <Form
+                        icon={
+                            <Image
+                                source={require('../../icons/Suburb.png')}
+                                style={{
+                                    marginRight: 5,
+                                    alignSelf: 'center',
+                                }}
+                                height={20}
+                                width={20}
+                            />
+                        }
                         label="Suburb/Area"
                         placeholder="Enter Suburb/Area"
                         onUpdate={(val) => this.setState({ suburbArea: val })}
                         value={this.state.suburbArea}
                     />
                     <Form
+                        icon={
+                            <Image
+                                source={require('../../icons/Suburb.png')}
+                                style={{
+                                    marginRight: 5,
+                                    alignSelf: 'center',
+                                }}
+                                height={20}
+                                width={20}
+                            />
+                        }
                         label="Province/State/District"
                         placeholder="Enter Province/State/District"
                         onUpdate={(val) => this.setState({ province: val })}
                         value={this.state.province}
                     />
                     <Form
+                        icon={
+                            <Image
+                                source={require('../../icons/Country.png')}
+                                style={{
+                                    marginRight: 5,
+                                    alignSelf: 'center',
+                                }}
+                                height={20}
+                                width={20}
+                            />
+                        }
                         label="Country"
                         placeholder="Enter Country"
                         onUpdate={(val) => this.setState({ country: val })}
                         value={this.state.country}
                     />
                     <Form
+                        icon={
+                            <Image
+                                source={require('../../icons/Phoneno.png')}
+                                style={{
+                                    marginRight: 5,
+                                    alignSelf: 'center',
+                                }}
+                                height={20}
+                                width={20}
+                            />
+                        }
                         label="Phone Number"
                         placeholder="Enter Phone Number"
                         onUpdate={(val) => this.setState({ phoneNumber: val })}
@@ -215,12 +303,34 @@ class AddAddress extends Component {
                         keyboardType="phone-pad"
                     />
                     <Form
+                        icon={
+                            <Image
+                                source={require('../../icons/Zone.png')}
+                                style={{
+                                    marginRight: 5,
+                                    alignSelf: 'center',
+                                }}
+                                height={20}
+                                width={20}
+                            />
+                        }
                         label="Zone/Pocket"
                         placeholder="Enter Zone/Pocket"
                         onUpdate={(val) => this.setState({ zonePocket: val })}
                         value={this.state.zonePocket}
                     />
                     <Textarea
+                        icon={
+                            <Image
+                                source={require('../../icons/Notes.png')}
+                                style={{
+                                    marginRight: 5,
+                                    marginTop: 12,
+                                }}
+                                height={20}
+                                width={20}
+                            />
+                        }
                         label="Notes"
                         placeholder="Type Notes..."
                         onUpdate={(val) => this.setState({ notes: val })}

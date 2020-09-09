@@ -88,6 +88,11 @@ const RecordReducer = (state = initialState, action) => {
                 updating: false,
                 errors: action.payload,
             };
+        case ActionTypes.RESET:
+            return {
+                ...state,
+                ...initialState,
+            };
         default:
             return state;
     }

@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    View,
+    TouchableOpacity,
+    Image,
+    Alert,
+} from 'react-native';
 import { connect } from 'react-redux';
 
 import firebase from '@react-native-firebase/app';
@@ -21,16 +28,13 @@ class Login extends Component {
         };
     }
 
-    componentDidMount() {
-        const user = firebase.auth().currentUser;
-        if (user) {
-            this.props.navigation.navigate('home');
-        }
-    }
-
     componentDidUpdate() {
         if (this.props.auth.authSuccess) {
-            this.props.navigation.navigate('home');
+            if (this.props.auth.user.isAdmin) {
+                this.props.navigation.navigate('adminPanel');
+            } else {
+                this.props.navigation.navigate('home');
+            }
         }
     }
 
@@ -47,7 +51,17 @@ class Login extends Component {
     };
 
     signup = () => {
-        this.props.navigation.navigate('register');
+        this.props.navigation.navigate('register', {
+            registerMosque: false,
+            title: 'User Sign Up',
+        });
+    };
+
+    registerMosque = () => {
+        this.props.navigation.navigate('register', {
+            registerMosque: true,
+            title: 'Register Masjid/Center',
+        });
     };
 
     Login = async () => {
@@ -99,6 +113,17 @@ class Login extends Component {
                         <Logo />
                         <View style={styles.formContainer}>
                             <Form
+                                icon={
+                                    <Image
+                                        source={require('../../icons/email.png')}
+                                        style={{
+                                            marginRight: 5,
+                                            alignSelf: 'center',
+                                        }}
+                                        height={20}
+                                        width={20}
+                                    />
+                                }
                                 placeholder="Email"
                                 onUpdate={this.setEmail}
                                 onSubmitEditing={() => this.password.focus()}
@@ -107,6 +132,17 @@ class Login extends Component {
                                 value={this.state.email}
                             />
                             <Form
+                                icon={
+                                    <Image
+                                        source={require('../../icons/password.png')}
+                                        style={{
+                                            marginRight: 5,
+                                            alignSelf: 'center',
+                                        }}
+                                        height={20}
+                                        width={20}
+                                    />
+                                }
                                 placeholder="Password"
                                 secureTextEntry={true}
                                 onUpdate={this.setPassword}
@@ -120,9 +156,14 @@ class Login extends Component {
                                 Dont have an account yet?{' '}
                             </Text>
                             <TouchableOpacity onPress={this.signup}>
-                                <Text style={styles.signupButton}>Signup</Text>
+                                <Text style={styles.signupButton}>Signup </Text>
                             </TouchableOpacity>
                         </View>
+                        <TouchableOpacity onPress={this.registerMosque}>
+                            <Text style={styles.signupButton}>
+                                Register Masjid
+                            </Text>
+                        </TouchableOpacity>
                         <TouchableOpacity onPress={this.forgotPassword}>
                             <Text style={styles.forgotPassword}>
                                 Forgot Password?
