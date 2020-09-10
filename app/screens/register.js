@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     Alert,
     Image,
+    ScrollView,
 } from 'react-native';
 
 import LoadingScreen from '../components/loader';
@@ -189,10 +190,9 @@ export default class Register extends Component {
                 {this.state.processing ? (
                     <LoadingScreen />
                 ) : (
-                    <View style={styles.container}>
+                    <ScrollView contentContainerStyle={styles.container}>
+                        <Logo />
                         <View style={styles.formContainer}>
-                            <Text>{'\n'}</Text>
-                            <Logo />
                             {registerMosque && (
                                 <Form
                                     icon={
@@ -401,7 +401,7 @@ export default class Register extends Component {
                                 <Text style={styles.signupButton}>Sign in</Text>
                             </TouchableOpacity>
                         </View>
-                    </View>
+                    </ScrollView>
                 )}
             </>
         );
@@ -415,10 +415,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     container: {
-        flex: 1,
+        height: '100%',
+        backgroundColor: 'white',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'white',
     },
     button: {
         width: 300,

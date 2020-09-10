@@ -280,7 +280,8 @@ const RecordTile = (props) => {
                             <View
                                 style={{
                                     flexDirection: 'row',
-                                    justifyContent: 'space-around',
+                                    justifyContent: 'center',
+                                    flexWrap: 'wrap'
                                 }}>
                                 <TouchableOpacity
                                     style={styles.button}
@@ -297,7 +298,6 @@ const RecordTile = (props) => {
                                     <Text style={styles.buttonText}>
                                         Visited Today
                                     </Text>
-                                    {/* {() => this.props.navigation.navigate('records')} */}
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={styles.button}
@@ -314,7 +314,6 @@ const RecordTile = (props) => {
                                     <Text style={styles.buttonText}>
                                         NAH Today
                                     </Text>
-                                    {/* {() => this.props.navigation.navigate('records')} */}
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -408,6 +407,7 @@ const styles = StyleSheet.create({
         padding: 2,
     }),
     button: {
+        margin: 2,
         height: 24,
         padding: 4,
         minWidth: '40%',
