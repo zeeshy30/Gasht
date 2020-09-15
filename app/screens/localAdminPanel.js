@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-// import { Actions } from 'react-native-router-flux';
 
 const LocalAdminPanel = (props) => {
     return (
@@ -15,6 +14,11 @@ const LocalAdminPanel = (props) => {
                 style={styles.button}
                 onPress={() => props.navigation.navigate('deletedRecords')}>
                 <Text style={styles.text}>Open Delete Address Requests</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => props.navigation.navigate('listUsers')}>
+                <Text style={styles.text}>Users List</Text>
             </TouchableOpacity>
         </View>
     );

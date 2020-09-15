@@ -4,7 +4,10 @@ import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 const SignupReqTile = (props) => {
     return (
         <>
-            <View style={styles.container}>
+            <View
+                style={styles.container(
+                    props.readOnly && props.disapproved && 'red',
+                )}>
                 <View style={{ margin: 10 }}>
                     <Text>Name: </Text>
                     <View style={styles.valueBox()}>
@@ -39,54 +42,58 @@ const SignupReqTile = (props) => {
                         </View>
                     </>
                 )}
-                <View style={styles.footer}>
-                    <TouchableOpacity
-                        onPress={() => props.approveUser(props.id)}
-                        style={{
-                            ...styles.button,
-                            backgroundColor: 'green',
-                        }}>
-                        <View
+                {!props.readOnly && (
+                    <View style={styles.footer}>
+                        <TouchableOpacity
+                            onPress={() => props.approveUser(props.id)}
                             style={{
-                                flexDirection: 'row',
-                                justifyContent: 'center',
+                                ...styles.button,
+                                backgroundColor: 'green',
                             }}>
-                            <Image
-                                source={require('../../icons/Approve.png')}
+                            <View
                                 style={{
-                                    marginRight: 5,
-                                    alignSelf: 'center',
-                                }}
-                                height={13}
-                                width={13}
-                            />
-                            <Text style={styles.buttonText}>Approve</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => props.disapproveUser(props.id)}
-                        style={{
-                            ...styles.button,
-                            backgroundColor: 'red',
-                        }}>
-                        <View
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                }}>
+                                <Image
+                                    source={require('../../icons/Approve.png')}
+                                    style={{
+                                        marginRight: 5,
+                                        alignSelf: 'center',
+                                    }}
+                                    height={13}
+                                    width={13}
+                                />
+                                <Text style={styles.buttonText}>Approve</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => props.disapproveUser(props.id)}
                             style={{
-                                flexDirection: 'row',
-                                justifyContent: 'center',
+                                ...styles.button,
+                                backgroundColor: 'red',
                             }}>
-                            <Image
-                                source={require('../../icons/Delete.png')}
+                            <View
                                 style={{
-                                    marginRight: 5,
-                                    alignSelf: 'center',
-                                }}
-                                height={13}
-                                width={13}
-                            />
-                            <Text style={styles.buttonText}>Disapprove</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                }}>
+                                <Image
+                                    source={require('../../icons/Delete.png')}
+                                    style={{
+                                        marginRight: 5,
+                                        alignSelf: 'center',
+                                    }}
+                                    height={13}
+                                    width={13}
+                                />
+                                <Text style={styles.buttonText}>
+                                    Disapprove
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                )}
             </View>
         </>
     );
@@ -95,13 +102,13 @@ const SignupReqTile = (props) => {
 export default SignupReqTile;
 
 const styles = StyleSheet.create({
-    container: {
+    container: (color) => ({
         marginVertical: 15,
         width: '100%',
-        backgroundColor: '#74B72E',
+        backgroundColor: color || '#74B72E',
         borderRadius: 2,
         justifyContent: 'center',
-    },
+    }),
     left: {
         width: '45%',
         borderRightWidth: 1,

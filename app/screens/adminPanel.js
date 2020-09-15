@@ -10,6 +10,7 @@ import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
 
 import AdminSignupRequests from './adminSignupRequests';
+import LocalAdminsList from './localAdminsList';
 import { Logout } from '../actions/auth';
 
 const Drawer = createDrawerNavigator();
@@ -25,12 +26,12 @@ function CustomDrawerContent(props) {
                     navigate('Signup Requests');
                 }}
             />
-            {/* <DrawerItem
-                label="Notifications"
+            <DrawerItem
+                label="Local Admins"
                 onPress={() => {
-                    navigate('Notifications');
+                    navigate('localAdminsList');
                 }}
-            /> */}
+            />
             <DrawerItem
                 label="Log Out"
                 onPress={() => {
@@ -60,10 +61,7 @@ function AdminPanel(props) {
                 name="Signup Requests"
                 component={AdminSignupRequests}
             />
-            {/* <Drawer.Screen
-                name="Notifications"
-                component={NotificationsScreenStack}
-            /> */}
+            <Drawer.Screen name="localAdminsList" component={LocalAdminsList} />
         </Drawer.Navigator>
     );
 }

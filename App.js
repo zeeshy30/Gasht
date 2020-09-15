@@ -22,6 +22,7 @@ import LocalAdminPanel from './app/screens/localAdminPanel';
 import AdminPanel from './app/screens/adminPanel';
 import DeletedRecords from './app/screens/deletedRecords';
 import SignupRequests from './app/screens/SignupRequests';
+import ListUsers from './app/screens/listUsers';
 
 const Stack = createStackNavigator();
 
@@ -108,6 +109,13 @@ const App = () => {
                     component={SignupRequests}
                     options={{
                         title: 'Signup Requests',
+                    }}
+                />
+                <Stack.Screen
+                    name="listUsers"
+                    component={ListUsers}
+                    options={{
+                        title: 'List Users',
                     }}
                 />
             </Stack.Navigator>
