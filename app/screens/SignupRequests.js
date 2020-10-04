@@ -74,7 +74,6 @@ const SignupRequests = (props) => {
                 textContent={'Updating...'}
                 textStyle={styles.spinnerTextStyle}
             />
-            {Object.keys(requests).length === 0 && <Text>No Requests</Text>}
             {Object.keys(requests).map((requestId) => (
                 <SignupReqTile
                     {...requests[requestId]}

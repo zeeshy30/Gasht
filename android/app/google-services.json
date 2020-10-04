@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "564770948297",
-    "firebase_url": "https://gasht-36551.firebaseio.com",
-    "project_id": "gasht-36551",
-    "storage_bucket": "gasht-36551.appspot.com"
+    "project_number": "546754701174",
+    "firebase_url": "https://gasht-2d31f.firebaseio.com",
+    "project_id": "gasht-2d31f",
+    "storage_bucket": "gasht-2d31f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:564770948297:android:b05e99d52910729ffb3918",
+        "mobilesdk_app_id": "1:546754701174:android:4a8bca58eb92066684fc57",
         "android_client_info": {
           "package_name": "com.gasht"
         }
       },
       "oauth_client": [
         {
-          "client_id": "564770948297-e24tafddf17kq1afju5amrraut36fr98.apps.googleusercontent.com",
+          "client_id": "546754701174-bijqsci3ku7grb3kptjc7kv7hff2r47n.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDtZUcEsH6qqWNtu-AkKqy8q9uONpavKOM"
+          "current_key": "AIzaSyCDcY8Txn78Ec5Aly_pQD_23_NEZwDBZwY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "564770948297-e24tafddf17kq1afju5amrraut36fr98.apps.googleusercontent.com",
+              "client_id": "546754701174-bijqsci3ku7grb3kptjc7kv7hff2r47n.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

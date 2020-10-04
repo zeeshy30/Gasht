@@ -89,7 +89,7 @@ export default class Register extends Component {
                     phoneNo,
                     masjidAddress,
                     isLocalAdmin: true,
-                    adminEmail: 'zee@gmail.com',
+                    adminEmail: 'devotedsoul786@gmail.com',
                     approved: false,
                     disapproved: false,
                 });
@@ -102,6 +102,29 @@ export default class Register extends Component {
             this.setState({ processing: false });
             Alert.alert(err);
         }
+    };
+
+    registerAdmin = async () => {
+        const { fullName, email, password, confirmPassword } = this.state;
+        if (password !== confirmPassword) {
+            Alert.alert("Passwords don't match.");
+            return;
+        }
+
+        const res = await firebase
+            .auth()
+            .createUserWithEmailAndPassword(email, password);
+
+        await firebase.firestore().collection('Users').doc(res.user.uid).set({
+            email: email.toLowerCase(),
+            fullName,
+            approved: true,
+            isAdmin: true,
+        });
+        if (firebase.auth().currentUser) {
+            await firebase.auth().signOut();
+        }
+        this.props.navigation.navigate('login');
     };
 
     SignUp = async () => {

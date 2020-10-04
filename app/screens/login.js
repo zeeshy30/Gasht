@@ -82,11 +82,9 @@ class Login extends Component {
         });
 
         if (!users.length) {
-            this.setState({ processing: false });
             Alert.alert('Invalid email');
             return;
         } else if (!users[0].approved) {
-            this.setState({ processing: false });
             Alert.alert(
                 'Your account has not been approved yet, Please contact your admin',
             );
